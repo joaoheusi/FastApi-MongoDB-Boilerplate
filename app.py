@@ -1,17 +1,26 @@
-from fastapi import FastAPI, status
-from fastapi.responses import JSONResponse
-from pydantic import BaseModel
+from beanie import init_beanie
+from fastapi import FastAPI
+from motor.motor_asyncio import AsyncIOMotorClient
+
+from config import DOCUMENT_MODELS, MONGODB_URL
+from src.modules.users.routers.index import router as users_router
 
 app = FastAPI()
 
-
-class HelloSchema(BaseModel):
-    message: str
+app.include_router(users_router)
 
 
-@app.get("/", response_model=HelloSchema)
-def hello():
-    return JSONResponse(
-        {"message": "Hello there!"},
-        status_code=status.HTTP_200_OK,
-    )
+@app.on_event("startup")
+async def startup_envent():
+    """
+    Initializing Beanie Database
+    """
+
+    # Whatever comes after AsyncIOMotorClient is the name of the database
+    # For example AsyncIOMotorClient(MONGODB_URL).app is going to access the
+    # database app
+    # -----------
+    # Inside document_models must go our Beanie Documents
+
+    database = AsyncIOMotorClient(MONGODB_URL).application
+    await init_beanie(database, document_models=DOCUMENT_MODELS)
