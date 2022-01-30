@@ -1,21 +1,21 @@
 from typing import Optional
 
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, StrictStr
 
 
 class UserInfo(BaseModel):
     username: str
     email: EmailStr
-    firstName: str
-    lastName: str
+    firstName: StrictStr
+    lastName: StrictStr
 
 
 class CreateUser(BaseModel):
     username: str
     email: EmailStr
     password: str
-    firstName: str
-    lastName: str
+    firstName: StrictStr
+    lastName: StrictStr
 
 
 class UpdateUserInfo(BaseModel):

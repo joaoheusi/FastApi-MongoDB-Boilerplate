@@ -11,3 +11,6 @@ class User(Document):
     password: str
     firstName: str
     lastName: str
+
+    class Collection:
+        name = "users"
