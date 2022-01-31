@@ -7,7 +7,7 @@ from fastapi.routing import APIRouter
 from src.modules.users.models.documents import User
 from src.modules.users.models.schemas import CreateUser, UpdateUserInfo, UserInfo
 from src.modules.users.usecases.crud import (
-    change_user_info,
+    change_user_info_usecase,
     create_user_usecase,
     find_all_usecase,
     find_one_by_id_usecase,
@@ -39,5 +39,5 @@ async def find_user_by_id(id: str):
 
 @router.patch("/{id}", response_model=UserInfo)
 async def edit_user(id: str, requestBody: UpdateUserInfo = Body(...)):
-    user = await change_user_info(id, requestBody)
+    user = await change_user_info_usecase(id, requestBody)
     return JSONResponse(user.dict(), status_code=status.HTTP_200_OK)
