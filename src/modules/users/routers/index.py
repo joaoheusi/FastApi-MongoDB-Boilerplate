@@ -26,7 +26,7 @@ async def create_user(requestBody: CreateUser = Body(...)):
 
 
 @router.get("", response_model=List[UserInfo])
-async def find_users(skip=0, limit=0):
+async def find_users(skip: int = 0, limit: int = 0):
     users = await find_all_usecase(skip=skip, limit=limit)
     return JSONResponse(jsonable_encoder(users), status_code=status.HTTP_200_OK)
 
