@@ -39,7 +39,7 @@ async def find_one_by_id_usecase(id: str) -> UserInfo:
     )
 
 
-async def change_user_info(id: str, new_user_info: UpdateUserInfo) -> UserInfo:
+async def change_user_info_usecase(id: str, new_user_info: UpdateUserInfo) -> UserInfo:
     user = await User.find_one(User.id == id)
     if not user:
         raise HTTPException(
@@ -53,3 +53,14 @@ async def change_user_info(id: str, new_user_info: UpdateUserInfo) -> UserInfo:
     await user.save_changes()
     user_new_value = await User.find_one(User.id == id).project(UserInfo)
     return user_new_value
+
+
+async def delete_user_usecase(id: str) -> None:
+    user = await User.find_one(User.id == id)
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="User with given ID not found.",
+        )
+    await user.delete()
+    return None
