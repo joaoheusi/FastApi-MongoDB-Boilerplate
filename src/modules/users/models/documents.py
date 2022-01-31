@@ -14,3 +14,6 @@ class User(Document):
 
     class Collection:
         name = "users"
+
+    class Settings:
+        use_state_management = True

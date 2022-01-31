@@ -5,8 +5,13 @@ from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
 from fastapi.routing import APIRouter
 from src.modules.users.models.documents import User
-from src.modules.users.models.schemas import CreateUser, UserInfo
-from src.modules.users.usecases.create_user import create_user_usecase
+from src.modules.users.models.schemas import CreateUser, UpdateUserInfo, UserInfo
+from src.modules.users.usecases.crud import (
+    change_user_info,
+    create_user_usecase,
+    find_all_usecase,
+    find_one_by_id_usecase,
+)
 
 router = APIRouter(
     prefix="/users",
@@ -22,11 +27,17 @@ async def create_user(requestBody: CreateUser = Body(...)):
 
 @router.get("", response_model=List[UserInfo])
 async def find_users(skip=0, limit=0):
-    users = await User.find().project(UserInfo).skip(skip).limit(limit).to_list()
+    users = await find_all_usecase(skip=skip, limit=limit)
     return JSONResponse(jsonable_encoder(users), status_code=status.HTTP_200_OK)
 
 
 @router.get("/{id}", response_model=UserInfo)
 async def find_user_by_id(id: str):
-    user = await User.find_one(User.id == id).project(UserInfo)
+    user = await find_one_by_id_usecase(id)
+    return JSONResponse(user.dict(), status_code=status.HTTP_200_OK)
+
+
+@router.patch("/{id}", response_model=UserInfo)
+async def edit_user(id: str, requestBody: UpdateUserInfo = Body(...)):
+    user = await change_user_info(id, requestBody)
     return JSONResponse(user.dict(), status_code=status.HTTP_200_OK)
