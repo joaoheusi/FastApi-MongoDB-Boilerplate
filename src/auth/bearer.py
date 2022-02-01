@@ -1,30 +1,22 @@
+from typing import cast
+
 from fastapi import HTTPException, Request, status
 from fastapi.security.oauth2 import OAuth2PasswordBearer
 from fastapi.security.utils import get_authorization_scheme_param
-from pydantic import BaseModel
-from src.auth.services import decode_jwt_token
-
-
-class AuthForm(BaseModel):
-    username: str
-    password: str
-
-
-class AuthToken(BaseModel):
-    accessToken: str
-    tokenType: str
+from src.auth.services import authorize_user, decode_jwt_token
 
 
 class JWTBearer(OAuth2PasswordBearer):
-    def __init__(self, tokenUrl: str, moduleName: str | None, auto_error: bool = True):
+    def __init__(self, tokenUrl: str, module_name: str | None, auto_error: bool = True):
         super(JWTBearer, self).__init__(auto_error=auto_error, tokenUrl=tokenUrl)
-        self.moduleName = moduleName
+        self.module_name = module_name
 
     async def __call__(self, request: Request) -> str | None:
         authorization: str = request.headers.get("Authorization")
         scheme, param = get_authorization_scheme_param(authorization)
         if authorization:
-            if not decode_jwt_token(param):
+            user_id = await decode_jwt_token(param)
+            if not user_id:
                 raise HTTPException(
                     status_code=status.HTTP_401_UNAUTHORIZED,
                     detail="Invalid token or expired token",
@@ -36,6 +28,12 @@ class JWTBearer(OAuth2PasswordBearer):
                         status_code=status.HTTP_403_FORBIDDEN,
                         detail="Invalid authentication method.",
                         headers={"WWW-Authenticate": "Bearer"},
+                    )
+            if self.module_name:
+                if not await authorize_user(cast(str, user_id), self.module_name):
+                    raise HTTPException(
+                        status_code=status.HTTP_401_UNAUTHORIZED,
+                        detail="User not authorized to call this method.",
                     )
             return param
         else:

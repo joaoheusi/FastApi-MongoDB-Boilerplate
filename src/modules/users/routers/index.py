@@ -1,9 +1,10 @@
 from typing import List
 
-from fastapi import Body, status
+from fastapi import Body, Depends, status
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
 from fastapi.routing import APIRouter
+from src.auth.bearer import JWTBearer
 from src.modules.users.models.schemas import CreateUser, UpdateUserInfo, UserInfo
 from src.modules.users.usecases.crud import (
     change_user_info_usecase,
@@ -16,6 +17,14 @@ from src.modules.users.usecases.crud import (
 router = APIRouter(
     prefix="/users",
     tags=["users"],
+    dependencies=[
+        Depends(
+            JWTBearer(
+                tokenUrl="auth",
+                module_name="users",
+            )
+        ),
+    ],
 )
 
 

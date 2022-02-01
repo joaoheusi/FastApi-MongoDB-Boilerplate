@@ -4,7 +4,7 @@ from src.auth.bearer import JWTBearer
 from src.auth.schemas import AuthForm, AuthToken
 from src.auth.services import authenticate_user
 
-auth_scheme = JWTBearer(tokenUrl="auth", moduleName=None)
+auth_scheme = JWTBearer(tokenUrl="auth", module_name=None)
 
 router = APIRouter(
     prefix="/auth",

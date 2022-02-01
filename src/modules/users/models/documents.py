@@ -1,3 +1,5 @@
+from typing import List
+
 from beanie import Document
 from pydantic import EmailStr
 from pydantic.fields import Field
@@ -11,6 +13,8 @@ class User(Document):
     password: str
     firstName: str
     lastName: str
+    isActive: bool = True
+    allowedModules: List[str] = ["users"]
 
     class Collection:
         name = "users"

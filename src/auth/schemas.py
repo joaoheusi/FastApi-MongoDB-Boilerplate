@@ -6,6 +6,11 @@ class AuthForm(BaseModel):
     password: str
 
 
+class JWTData(BaseModel):
+    userId: str
+    exp: str
+
+
 class AuthToken(BaseModel):
     accessToken: str
     tokenType: str
