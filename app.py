@@ -13,7 +13,7 @@ app.include_router(auth_router)
 
 
 @app.on_event("startup")
-async def startup_envent():
+async def startup_event():
     """
     Initializing Beanie Database
     """
