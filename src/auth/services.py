@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta
+from typing import Union
 
 from fastapi import HTTPException, status
 from jose import jwt
@@ -26,7 +27,7 @@ async def create_jwt_token(user_id: str) -> str:
     return encoded_jwt
 
 
-async def decode_jwt_token(token: str) -> str | bool:
+async def decode_jwt_token(token: str) -> Union[str, bool]:
     try:
         data = jwt.decode(
             token=token,

@@ -1,4 +1,4 @@
-from typing import cast
+from typing import Optional, cast
 
 from fastapi import HTTPException, Request, status
 from fastapi.security.oauth2 import OAuth2PasswordBearer
@@ -7,11 +7,13 @@ from src.auth.services import authorize_user, decode_jwt_token
 
 
 class JWTBearer(OAuth2PasswordBearer):
-    def __init__(self, tokenUrl: str, module_name: str | None, auto_error: bool = True):
+    def __init__(
+        self, tokenUrl: str, module_name: Optional[str], auto_error: bool = True
+    ):
         super(JWTBearer, self).__init__(auto_error=auto_error, tokenUrl=tokenUrl)
         self.module_name = module_name
 
-    async def __call__(self, request: Request) -> str | None:
+    async def __call__(self, request: Request) -> Optional[str]:
         authorization: str = request.headers.get("Authorization")
         scheme, param = get_authorization_scheme_param(authorization)
         if authorization:
