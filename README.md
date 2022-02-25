@@ -2,9 +2,9 @@
 
 ## Contains
 
-Fastapi
-Async MongoDB Database with Beanie ODM
-Scalable folder structure
+- Fastapi
+- Async MongoDB Database with Beanie ODM
+- Scalable folder structure
 
 ## Future
 
