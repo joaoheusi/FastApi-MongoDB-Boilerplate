@@ -29,16 +29,16 @@ JWT_ALGORITHM=HS256
 JWT_SECRET_KEY=your_jwt_secret_key
 
 #FASTAPI_MAIL
-MAIL_USERNAME="email@address.com", # email address
-MAIL_PASSWORD="password", # password
-MAIL_FROM="another@address.com", # e-mail that will appear to receiver, can be the same or another
-MAIL_PORT=587, # Mail server port. Ex: 587
-MAIL_SERVER="smtp.gmail.com", # Mail server. Ex: smtp.gmail.com
-MAIL_FROM_NAME="Fastapi Boilerplate Mailer", # Name used to send mail
-MAIL_TLS=True, # bool
-MAIL_SSL=False, # bool
-USE_CREDENTIALS=True, # bool
-VALIDATE_CERTS=True, # bool
+MAIL_USERNAME="email@address.com"
+MAIL_PASSWORD=password
+MAIL_FROM=another@address.com
+MAIL_PORT=587
+MAIL_SERVER=smtp.gmail.com
+MAIL_FROM_NAME="Fastapi Boilerplate Mailer"
+MAIL_TLS=True
+MAIL_SSL=False
+USE_CREDENTIALS=True
+VALIDATE_CERTS=True
 
 ```
 
