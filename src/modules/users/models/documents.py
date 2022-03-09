@@ -13,7 +13,8 @@ class User(Document):
     password: str
     firstName: str
     lastName: str
-    isActive: bool = True
+    isActive: bool = False
+    isEmailConfirmed: bool = False
     allowedModules: List[str] = ["users"]
 
     class Collection:
