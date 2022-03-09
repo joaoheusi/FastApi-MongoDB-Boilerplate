@@ -15,7 +15,7 @@ class User(Document):
     lastName: str
     isActive: bool = False
     isEmailConfirmed: bool = False
-    allowedModules: List[str] = ["users"]
+    allowedModules: List[str] = []
 
     class Collection:
         name = "users"

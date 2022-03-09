@@ -1,16 +1,21 @@
 from fastapi import status
 from fastapi.exceptions import HTTPException
 from fastapi_mail import MessageSchema
-from src.modules.users.models.schemas import UserInfo
 from src.shared.providers.email.config import fast_mail
+from src.shared.providers.email.schemas.send_registration_email_props import (
+    SendRegistrationEmailProps,
+)
 
 
-async def send_registration_email(user: UserInfo):
+async def send_registration_email(props: SendRegistrationEmailProps):
     try:
-        body_content = {"firstName": user.firstName}
+        body_content = {
+            "firstName": props.user.firstName,
+            "url": props.validationUrl,
+        }
         message = MessageSchema(
             subject="Confirm your email",
-            recipients=[user.email],
+            recipients=[props.user.email],
             template_body=body_content,
             subtype="html",
         )

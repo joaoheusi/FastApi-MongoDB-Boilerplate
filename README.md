@@ -7,6 +7,8 @@
 - Scalable folder structure
 - Authentication
 - Users (CRUD)
+- User Registration
+- Email validation with Fastapi-mail
 
 ## Quickstart
 
@@ -40,6 +42,9 @@ MAIL_SSL=False
 USE_CREDENTIALS=True
 VALIDATE_CERTS=True
 
+#API URL (used in email validation)
+API_URL="http://localhost:8000"
+
 ```
 
 Any string can be used as the jwt secret key.
@@ -58,5 +63,4 @@ Paste the output in the .env file
 
 ## Future
 
-- User sign-up w/ e-mail
 - Route testing
