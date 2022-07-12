@@ -7,16 +7,23 @@ from src.shared.utils.encryption import encrypt
 
 
 async def create_user_service(create_user: CreateUser) -> UserInfo:
-    new_user = User(
-        username=create_user.username,
-        email=create_user.email,
-        password=encrypt(create_user.password),
-        firstName=create_user.firstName,
-        lastName=create_user.lastName,
+    email_used = await User.find_one(User.email == create_user.email)
+    if not email_used:
+        new_user = User(
+            username=create_user.username,
+            email=create_user.email,
+            password=encrypt(create_user.password),
+            firstName=create_user.firstName,
+            lastName=create_user.lastName,
+        )
+        db_response: User = await new_user.insert()
+        created_user = await User.find_one(User.id == db_response.id).project(UserInfo)
+        return created_user
+    # If email already in use raise error
+    raise HTTPException(
+        status_code=status.HTTP_409_CONFLICT,
+        detail={"error": "User with provided e-mail already exists"},
     )
-    db_response: User = await new_user.insert()
-    created_user = await User.find_one(User.id == db_response.id).project(UserInfo)
-    return created_user
 
 
 async def find_all_service(skip: int, limit: int) -> List[UserInfo]:

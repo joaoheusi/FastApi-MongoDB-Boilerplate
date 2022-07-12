@@ -63,4 +63,4 @@ Paste the output in the .env file
 
 ## Future
 
-- Route testing
+- Route testing (Currently on development)

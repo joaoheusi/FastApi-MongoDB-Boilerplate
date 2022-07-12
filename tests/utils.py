@@ -9,4 +9,9 @@ class TestInfo(BaseModel):
 
 
 def get_test_successful_message(test_info: TestInfo) -> str:
-    return f"|{test_info.module}|{test_info.test_name} passed."
+    return f"|PASS| {test_info.module} | {test_info.test_name} passed."
+
+
+def get_test_unsuccessful_message(test_info: TestInfo, error: Exception) -> str:
+    return f"|FAIL| {test_info.module} | {test_info.test_name}  did not pass. \
+     Assertion Error: {error}"

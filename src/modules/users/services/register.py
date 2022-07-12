@@ -41,5 +41,5 @@ async def register_user_service(
     # If email already in use raise error
     raise HTTPException(
         status_code=status.HTTP_409_CONFLICT,
-        detail={"detail": "User with provided e-mail already exists"},
+        detail={"error": "User with provided e-mail already exists"},
     )

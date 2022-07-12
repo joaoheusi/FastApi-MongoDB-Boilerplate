@@ -1,9 +1,10 @@
 from typing import Optional
 
-from pydantic import BaseModel, EmailStr, StrictStr
+from pydantic import BaseModel, EmailStr, Field, StrictStr
 
 
 class UserInfo(BaseModel):
+    id: str = Field(alias="_id")
     username: str
     email: EmailStr
     firstName: StrictStr
