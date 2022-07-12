@@ -61,6 +61,11 @@ Paste the output in the .env file
 
 5. Run `uvicorn app:app --reload` for development.
 
+## Testing
+
+Testing is made possible by running the tests.py file in the project's root directory
+They are organized in a folder called tests that is also in the project's root directory
+
 ## Future
 
 - Route testing (Currently on development)

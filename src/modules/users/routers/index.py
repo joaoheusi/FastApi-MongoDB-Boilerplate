@@ -33,7 +33,7 @@ router = APIRouter(
     ], """
 
 
-@router.post("/register")
+@router.post("/register", response_model=UserInfo)
 async def register_user(requestBody: CreateUser = Body(...)):
     user, background_task = await register_user_service(requestBody)
     return JSONResponse(

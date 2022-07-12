@@ -41,8 +41,11 @@ def test_create_user(client: Client, user_data: CreateUser):
             response.json()["lastName"] == user_data.lastName
         ), "lastName does not match giver lastName"
         print(get_test_successful_message(create_user_info))
+        return response.json()["id"]
+
     except AssertionError as assertion_error:
         print(get_test_unsuccessful_message(create_user_info, error=assertion_error))
+        return False
 
 
 def test_create_duplicate_user(client: Client, user_data: CreateUser):
