@@ -23,8 +23,9 @@
 # mongodb+srv://<username>:<password>@<address>/<database>?retryWrites=true&w=majority
 MONGO_URL=your_mongodb_url
 
-# FERNET ENCRYPTION KEY
-ENCRYPTION_KEY=fernet_encryption_key
+# FERNET ENCRYPTION KEYS
+PWD_ENCRYPTION_KEY=fernet_encryption_key
+UUID_ENCRYPTION_KEY=fernet_encryption_key
 
 # JWT
 JWT_ALGORITHM=HS256

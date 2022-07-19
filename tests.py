@@ -32,7 +32,7 @@ def main():
         test_find_users(client)
         test_find_user_by_id(client, created_id)
         test_edit_user(client, created_id, edit_data=edit_data)
-        test_delete_user(client, created_id)
+        # test_delete_user(client, created_id)
 
 
 if __name__ == "__main__":
